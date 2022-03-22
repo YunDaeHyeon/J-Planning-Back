@@ -19,7 +19,7 @@ public class JPlanningController {
         userService.saveUser(userDTO);
         model.addAttribute("message","성공");
 
-        ModelAndView mv = new ModelAndView("/user");
+        ModelAndView mv = new ModelAndView("/user_access");
         return mv;
 //        return "redirect:/response_success";
     }
