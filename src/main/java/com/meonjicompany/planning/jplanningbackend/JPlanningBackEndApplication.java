@@ -1,5 +1,6 @@
 package com.meonjicompany.planning.jplanningbackend;
 
+import com.meonjicompany.planning.jplanningbackend.configuration.SecurityConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
