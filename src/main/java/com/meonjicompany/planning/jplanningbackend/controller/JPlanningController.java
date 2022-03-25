@@ -22,12 +22,15 @@ public class JPlanningController {
     private UserService userService;
 
     @RequestMapping(value = "save")
-    public Message TestPost(HttpServletRequest request){
+    public Message TestPost(HttpServletRequest request, UserDTO userDTO) throws Exception{
         Message message = new Message();
         try{
             message.setMessage("정상적으로 값을 받았습니다.");
             String email = request.getParameter("user_email");
             String nickname = request.getParameter("user_nickname");
+            userDTO.setUserEmail(email);
+            userDTO.setUserNickname(nickname);
+            userService.saveUser(userDTO);
             System.out.println("이메일 : "+email);
             System.out.println("닉네임 : "+nickname);
             return message;

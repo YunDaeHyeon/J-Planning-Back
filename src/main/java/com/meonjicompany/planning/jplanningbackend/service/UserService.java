@@ -4,7 +4,6 @@ import com.meonjicompany.planning.jplanningbackend.dto.UserDTO;
 import com.meonjicompany.planning.jplanningbackend.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -20,8 +19,7 @@ public class UserService {
     @Autowired
     UserMapper userMapper;
 
-    @Transactional
-    public void saveUser(UserDTO userDTO){
+    public void saveUser(UserDTO userDTO) throws Exception{
         userMapper.registerUser(userDTO);
     }
 }
