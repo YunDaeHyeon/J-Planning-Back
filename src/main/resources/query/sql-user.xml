@@ -9,4 +9,16 @@
     <select id="roadUserId" resultType="int">
         select user_id from user where user_email = #{user_email}
     </select>
+    <!-- 계획 저장 : DB TABLE - plan -->
+    <insert id="savePlan" parameterType="com.meonjicompany.planning.jplanningbackend.dto.PlanSaveDTO">
+        insert into plan (user_id, plan_title, plan_date, plan_create_date) values (#{userId}, #{planTitle}, #{planDate}, NOW())
+    </insert>
+    <!-- 계획 id 불러오기 -->
+    <select id="roadPlanId" resultType="int">
+        select plan_id from plan where plan_title = #{planTitle}
+    </select>
+    <!-- 상세 계획 저장 : DB TABLE - piece -->
+    <insert id="savePiece" parameterType="com.meonjicompany.planning.jplanningbackend.dto.PieceSaveDTO">
+        insert into piece (plan_id, piece_time, piece_contents) values (#{planId},#{pieceTime},#{pieceContents})
+    </insert>
 </mapper>
