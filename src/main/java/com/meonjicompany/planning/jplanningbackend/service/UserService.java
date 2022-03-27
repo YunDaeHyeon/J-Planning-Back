@@ -22,4 +22,8 @@ public class UserService {
     public void saveUser(UserDTO userDTO) throws Exception{
         userMapper.registerUser(userDTO);
     }
+
+    public int userRoadId(String userEmail) throws Exception{
+        return userMapper.roadUserId(userEmail);
+    }
 }

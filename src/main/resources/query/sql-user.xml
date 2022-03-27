@@ -3,6 +3,10 @@
 <mapper namespace="com.meonjicompany.planning.jplanningbackend.mapper.UserMapper">
     <!-- 회원가입 -->
     <insert id="registerUser" parameterType="com.meonjicompany.planning.jplanningbackend.dto.UserDTO">
-        INSERT INTO user (user_email, user_nickname) VALUES (#{userEmail},#{userNickname});
+        INSERT INTO user (user_email, user_nickname, user_created_date) VALUES (#{userEmail},#{userNickname}, NOW());
     </insert>
+    <!--사용자 id 불러오기-->
+    <select id="roadUserId" resultType="int">
+        select user_id from user where user_email = #{user_email}
+    </select>
 </mapper>

@@ -17,13 +17,13 @@ import java.util.logging.Logger;
 @RestController
 @RequestMapping("/user/")
 public class JPlanningController {
-
+    Message message;
     @Autowired
     private UserService userService;
 
     @RequestMapping(value = "save")
-    public Message TestPost(HttpServletRequest request, UserDTO userDTO) throws Exception{
-        Message message = new Message();
+    public Message userSave(HttpServletRequest request, UserDTO userDTO) throws Exception{
+        message = new Message();
         try{
             message.setMessage("정상적으로 값을 받았습니다.");
             String email = request.getParameter("user_email");
@@ -40,8 +40,27 @@ public class JPlanningController {
             e.printStackTrace();
             return message;
         }
+    }
+
+    @RequestMapping(value = "roadUserId")
+    public Message roadUserId(HttpServletRequest request) throws Exception{
+        message = new Message();
+        try{
+            String email = request.getParameter("user_email");
+            int userId = userService.userRoadId(email);
+            message.setMessage(String.valueOf(userId));
+            userService.userRoadId(email);
+            System.out.println("유저 식별값 : "+userService.userRoadId(email));
+            return message;
+        }catch(Exception e){
+            message.setMessage("서버에서 값을 받는 도중 문제가 생겼습니다.");
+            System.out.println("통신 실패");
+            e.printStackTrace();
+            return message;
         }
     }
+
+}
 
 class Message{
     String message;

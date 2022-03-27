@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserMapper {
     // 사용자 정보 저장
     void registerUser(UserDTO userDTO) throws Exception;
+    // 사용자 id 불러오기
+    int roadUserId(String userEmail) throws Exception;
 }
