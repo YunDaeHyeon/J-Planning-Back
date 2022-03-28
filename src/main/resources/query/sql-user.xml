@@ -21,4 +21,8 @@
     <insert id="savePiece" parameterType="com.meonjicompany.planning.jplanningbackend.dto.PieceSaveDTO">
         insert into piece (plan_id, piece_time, piece_contents) values (#{planId},#{pieceTime},#{pieceContents})
     </insert>
+    <!-- 계획 불러오기 -->
+    <select id="roadPlan" parameterType="int" resultType="com.meonjicompany.planning.jplanningbackend.dto.PlanRoadDTO">
+        select plan_id, plan_title, plan_date from plan where user_id = #{userId} ORDER BY plan_id
+    </select>
 </mapper>

@@ -1,10 +1,9 @@
 package com.meonjicompany.planning.jplanningbackend.controller;
 
-import com.meonjicompany.planning.jplanningbackend.dto.PieceSaveDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.PlanDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.PlanSaveDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.UserDTO;
+import com.meonjicompany.planning.jplanningbackend.dto.*;
 import com.meonjicompany.planning.jplanningbackend.service.UserService;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -12,12 +11,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.logging.Logger;
 
 @RestController
 @RequestMapping("/user/")
 public class JPlanningController {
     Message message;
+    JSONArray jsonArray;
     int key = 0;
     @Autowired
     private UserService userService;
@@ -32,8 +33,8 @@ public class JPlanningController {
             userDTO.setUserEmail(email);
             userDTO.setUserNickname(nickname);
             userService.saveUser(userDTO);
-            System.out.println("이메일 : "+email);
-            System.out.println("닉네임 : "+nickname);
+            key = userService.userRoadId(email);
+            message.setMessage(String.valueOf(key));
             return message;
         }catch(Exception e){
             message.setMessage("서버에서 값을 받는 도중 문제가 생겼습니다.");
@@ -48,14 +49,12 @@ public class JPlanningController {
         message = new Message();
         try{
             String email = request.getParameter("user_email");
-            int userId = userService.userRoadId(email);
-            message.setMessage(String.valueOf(userId));
-            userService.userRoadId(email);
             key = userService.userRoadId(email);
+            message.setMessage(String.valueOf(key));
+            // userService.userRoadId(email);
             System.out.println("유저 식별값 : "+key);
             return message;
         }catch(Exception e){
-            message.setMessage("서버에서 값을 받는 도중 문제가 생겼습니다.");
             System.out.println("roadUserId 통신 실패");
             e.printStackTrace();
             return message;
@@ -83,13 +82,35 @@ public class JPlanningController {
                 pieceSaveDTO.setPieceContents(planDTO.getPieces().get(i).getPieceContents());
                 userService.savePiece(pieceSaveDTO); // piece 테이블에 값 저장
             }
-            message.setMessage("성공적으로 값을 받았습니다.");
+            message.setMessage(String.valueOf(planId));
             return message;
         }catch (Exception e){
-            message.setMessage("서버에서 값을 받는 도중 문제가 생겼습니다.");
             System.out.println("savePlan 통신 실패");
             e.printStackTrace();
             return message;
+        }
+    }
+
+    @RequestMapping(value = "roadPlan", produces = "application/json; charset=utf8")
+    public JSONArray roadPlan(HttpServletRequest request) throws Exception{
+        jsonArray = new JSONArray();
+        try{
+            int userId = Integer.parseInt(request.getParameter("user_id")); // 유저 PK값 불러오기
+            List<PlanRoadDTO> planRoadDTO = userService.roadPlan(userId);
+            System.out.println(planRoadDTO.size());
+            for(int i = 0; i < planRoadDTO.size(); i++){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("plan_id",planRoadDTO.get(i).getPlanId());
+                jsonObject.put("plan_title",planRoadDTO.get(i).getPlanTitle());
+                jsonObject.put("plan_date",planRoadDTO.get(i).getPlanDate());
+                jsonArray.add(jsonObject);
+            }
+            System.out.println(jsonArray);
+            return jsonArray;
+        }catch(Exception e){
+            System.out.println("roadPlan 통신 실패");
+            e.printStackTrace();
+            return jsonArray;
         }
     }
 

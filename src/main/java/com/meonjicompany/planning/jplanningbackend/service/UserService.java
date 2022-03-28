@@ -1,6 +1,7 @@
 package com.meonjicompany.planning.jplanningbackend.service;
 
 import com.meonjicompany.planning.jplanningbackend.dto.PieceSaveDTO;
+import com.meonjicompany.planning.jplanningbackend.dto.PlanRoadDTO;
 import com.meonjicompany.planning.jplanningbackend.dto.PlanSaveDTO;
 import com.meonjicompany.planning.jplanningbackend.dto.UserDTO;
 import com.meonjicompany.planning.jplanningbackend.mapper.UserMapper;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +46,10 @@ public class UserService {
     // 상세 계획 저장, 테이블 : piece
     public void savePiece(PieceSaveDTO pieceSaveDTO) throws Exception{
         userMapper.savePiece(pieceSaveDTO);
+    }
+
+    // 계획 불러오기
+    public List<PlanRoadDTO> roadPlan(int userId) throws Exception{
+        return userMapper.roadPlan(userId);
     }
 }
