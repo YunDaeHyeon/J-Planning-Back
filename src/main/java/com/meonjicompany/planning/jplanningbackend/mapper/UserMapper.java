@@ -1,9 +1,6 @@
 package com.meonjicompany.planning.jplanningbackend.mapper;
 
-import com.meonjicompany.planning.jplanningbackend.dto.PieceSaveDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.PlanRoadDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.PlanSaveDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.UserDTO;
+import com.meonjicompany.planning.jplanningbackend.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,4 +19,6 @@ public interface UserMapper {
     void savePiece(PieceSaveDTO pieceSaveDTO) throws Exception;
     // 계획 불러오기
     List<PlanRoadDTO> roadPlan(int userId) throws Exception;
+    // 상세 계획 불러오기
+    List<PieceRoadDTO> roadPiece(int planId) throws Exception;
 }

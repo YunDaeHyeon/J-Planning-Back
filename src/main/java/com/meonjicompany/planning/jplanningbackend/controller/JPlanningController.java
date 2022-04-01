@@ -114,6 +114,29 @@ public class JPlanningController {
         }
     }
 
+    @RequestMapping(value = "roadPiece", produces = "application/json; charset=utf8")
+    public JSONArray roadPiece(HttpServletRequest request) throws Exception{
+        jsonArray = new JSONArray();
+        try{
+            int planId = Integer.parseInt(request.getParameter("plan_id")); // 계획 PK값 불러오기
+            List<PieceRoadDTO> pieceRoadDTO = userService.roadPiece(planId);
+            System.out.println(planId);
+            for(int i = 0; i < pieceRoadDTO.size(); i++){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("piece_id",pieceRoadDTO.get(i).getPieceId());
+                jsonObject.put("piece_time",pieceRoadDTO.get(i).getPieceTime());
+                jsonObject.put("piece_contents",pieceRoadDTO.get(i).getPieceContents());
+                jsonArray.add(jsonObject);
+            }
+            System.out.println(jsonArray);
+            return jsonArray;
+        }catch (Exception e){
+            System.out.println("roadPiece 통신 실패");
+            e.printStackTrace();
+            return jsonArray;
+        }
+    }
+
 }
 
 class Message{

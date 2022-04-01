@@ -1,9 +1,6 @@
 package com.meonjicompany.planning.jplanningbackend.service;
 
-import com.meonjicompany.planning.jplanningbackend.dto.PieceSaveDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.PlanRoadDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.PlanSaveDTO;
-import com.meonjicompany.planning.jplanningbackend.dto.UserDTO;
+import com.meonjicompany.planning.jplanningbackend.dto.*;
 import com.meonjicompany.planning.jplanningbackend.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,5 +48,10 @@ public class UserService {
     // 계획 불러오기
     public List<PlanRoadDTO> roadPlan(int userId) throws Exception{
         return userMapper.roadPlan(userId);
+    }
+
+    // 상세 계획 불러오기
+    public List<PieceRoadDTO> roadPiece(int planId) throws Exception{
+        return userMapper.roadPiece(planId);
     }
 }

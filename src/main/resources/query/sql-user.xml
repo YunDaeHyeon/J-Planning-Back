@@ -23,6 +23,10 @@
     </insert>
     <!-- 계획 불러오기 -->
     <select id="roadPlan" parameterType="int" resultType="com.meonjicompany.planning.jplanningbackend.dto.PlanRoadDTO">
-        select plan_id, plan_title, plan_date from plan where user_id = #{userId} ORDER BY plan_id
+        select plan_id, plan_title, plan_date from plan where user_id = #{userId} ORDER BY plan_date
+    </select>
+    <!-- 상세 계획 불러오기 -->
+    <select id="roadPiece" parameterType="int" resultType="com.meonjicompany.planning.jplanningbackend.dto.PieceRoadDTO">
+        select piece_id, piece_time, piece_contents from piece where plan_id = #{planId} order by piece_time
     </select>
 </mapper>
